@@ -117,17 +117,47 @@ class LinkedList {
     return string;
   }
 
-  // Doesn't work right, inserts node at +1 the given index
   insertAt(value, index) {
     let current = this.head;
     const newNode = new Node(value);
     let nodePosition = 0;
 
-    if (index != nodePosition) {
+    if (index === 0) {
+      newNode.next = this.head;
+      this.head = newNode;
+      return;
+    }
+    while (current) {
+      if (nodePosition === index - 1) {
+        newNode.next = current.next;
+        current.next = newNode;
+        return;
+      }
       current = current.next;
       nodePosition++;
     }
-    return (newNode.next = current.next), (current.next = newNode);
+
+    throw new Error("Index out of bounds");
+  }
+
+  removeAt(index) {
+    let current = this.head;
+    let nodePosition = 0;
+
+    if (index === 0) {
+      current.value = null;
+      this.head = current.next;
+      return;
+    }
+    while (current) {
+      if (nodePosition === index - 1) {
+        current.next.value = null;
+        current.next = current.next.next;
+        return;
+      }
+      current = current.next;
+      nodePosition++;
+    }
   }
 }
 
@@ -141,15 +171,15 @@ list.append(33);
 list.prepend(123);
 
 console.log(list);
-console.log("append:");
-console.log("prepend:");
-console.log("size:", list.size());
-console.log("head:", list.head);
-console.log("tail:", list.tail());
-console.log("at:", list.at(4));
-console.log("pop:");
-console.log("contains", list.contains(11));
-console.log("find:", list.find(123));
+// console.log("append:");
+// console.log("prepend:");
+// console.log("size:", list.size());
+// console.log("head:", list.head);
+// console.log("tail:", list.tail());
+// console.log("at:", list.at(4));
+// console.log("pop:");
+// console.log("contains", list.contains(11));
+// console.log("find:", list.find(123));
+list.insertAt(55, 4);
+// list.removeAt(4);
 console.log(list.toString());
-list.insertAt(55, 2);
-console.log(list);
