@@ -59,16 +59,74 @@ class LinkedList {
     return current;
   }
 
-  at(value) {
-    let index = 1;
-    let current = list.head;
+  at(index) {
+    let nodePosition = 1;
+    let current = this.head;
 
-    while (current.value != value) {
+    while (index != nodePosition) {
+      current = current.next;
+      nodePosition++;
+    }
+    return current;
+  }
+
+  pop() {
+    let current = this.head;
+    while (current.next.next) {
+      current = current.next;
+    }
+    current.next = null;
+  }
+
+  contains(value) {
+    let current = this.head;
+    while (current && current.value !== value) {
+      current = current.next;
+    }
+    if (!current) {
+      return false;
+    }
+    if (current.value == value) {
+      return true;
+    }
+  }
+
+  find(value) {
+    let index = 1;
+    let current = this.head;
+
+    while (current && current.value !== value) {
       current = current.next;
       index++;
     }
+
+    if (!current) {
+      return `"${value}" not found`;
+    }
     return index;
   }
+
+  toString() {
+    let current = this.head;
+    let string = "";
+    while (current.next) {
+      string += `(${current.value}) -> `;
+      current = current.next;
+    }
+    string += `(${current.value}) -> (null)`;
+    return string;
+  }
+
+  // insertAt(value, index) {
+  //   const newNode = new Node(value);
+  //   let nodePosition = 1;
+  //   let current = this.head;
+  //   while (current && (nodePosition + 1) == index) {
+  //     newNode.next = current.next;
+  //     current.next = newNode;
+  //     nodePosition++;
+  //   }
+  // }
 }
 
 let node1 = new Node(11);
@@ -81,7 +139,14 @@ list.append(33);
 list.prepend(123);
 
 console.log(list);
-console.log(list.size());
-console.log(list.tail());
-console.log(list.head.value);
-console.log(list.at(11));
+console.log("append:");
+console.log("prepend:");
+console.log("size:", list.size());
+console.log("head:", list.head);
+console.log("tail:", list.tail());
+console.log("at:", list.at(4));
+console.log("pop:");
+console.log("contains", list.contains(11));
+console.log("find:", list.find(123));
+console.log(list.toString());
+// list.insertAt(55, 3);
