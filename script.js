@@ -117,16 +117,18 @@ class LinkedList {
     return string;
   }
 
-  // insertAt(value, index) {
-  //   const newNode = new Node(value);
-  //   let nodePosition = 1;
-  //   let current = this.head;
-  //   while (current && (nodePosition + 1) == index) {
-  //     newNode.next = current.next;
-  //     current.next = newNode;
-  //     nodePosition++;
-  //   }
-  // }
+  // Doesn't work right, inserts node at +1 the given index
+  insertAt(value, index) {
+    let current = this.head;
+    const newNode = new Node(value);
+    let nodePosition = 0;
+
+    if (index != nodePosition) {
+      current = current.next;
+      nodePosition++;
+    }
+    return (newNode.next = current.next), (current.next = newNode);
+  }
 }
 
 let node1 = new Node(11);
@@ -149,4 +151,5 @@ console.log("pop:");
 console.log("contains", list.contains(11));
 console.log("find:", list.find(123));
 console.log(list.toString());
-// list.insertAt(55, 3);
+list.insertAt(55, 2);
+console.log(list);
